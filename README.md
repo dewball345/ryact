@@ -1,6 +1,6 @@
 Ryact: a react-like framework to build super-fast web apps in python.
 
-Ryact is powered by rapydscript.
+Ryact is powered by [rapydscript](https://github.com/atsepkov/RapydScript).
 
 
 Do:
