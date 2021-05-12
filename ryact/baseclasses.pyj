@@ -3,6 +3,28 @@ import random
 # from __python__ import bound_methods
 
 def cre(elem, attrs, children=[]):
+    '''
+    Function to create dom trees in ryact. 
+
+    ...
+
+    Parameters
+    ----------
+    elem : HTML element
+        This is the element that will have the children in it
+    
+    attrs: Dict
+        This is a dictionary of attributes
+
+    children: List[HTML element]
+        This is the children that will be added
+
+    Returns
+    -------
+    HTML Element
+        Combined element with parent and children
+    '''
+
     element = document.createElement(elem)
     for attr in Object.keys(attrs):
         # print(attr, attrs[attr])
@@ -17,6 +39,22 @@ def cre(elem, attrs, children=[]):
     return element
 
 def css(cssObject):
+    '''
+    Converts a css dictionary into a style string. This is mostly syntatic sugar.
+
+    ...
+
+    Parameters
+    ----------
+    cssObject : Dict
+        This is the element that will have the children in it
+
+    Returns
+    -------
+    String
+        Css string
+    '''
+
     compiledString = ""
     for obj in Object.keys(cssObject):
         string = obj + ":" + cssObject[obj] + ";"
@@ -30,10 +68,52 @@ def css(cssObject):
 #     document.getElementById(divId).appendChild(component)
 
 class Base:
+    '''
+    The Base(as mentioned in the class name) class, the one which all stateless and stateful components come from
+
+    ...
+
+    Attributes
+    ----------
+    You can pass props through the constructor. This is optional; no props need to be passed for this to work
+
+    Methods
+    -------
+    render() -> an HTML element
+        Initial rendering of content
+    '''
     def render(self):
         pass
 
 class GenerateContainers:
+    '''
+    Class is used to generate containers that are identified and dom-diffed during setState()
+
+    ...
+
+    Attributes
+    ----------
+    self.outerId : str
+        The id of the first identifier in setState. 
+
+    self.innerId : str
+        The id of the second identifier in setState. 
+
+    self.container: html.DIV
+        This is the first identifier in setState. Breact uses a simple 
+        getElementById to access this container. The content container
+        resides in here
+
+    self.content: html.DIV
+        This is the second identifier in setState, and holds the main 
+        content. This container is dom-diffed in the StatefulSegment
+        class or deleted and reupdated in the OLD_StatefulSegment class
+
+    Methods
+    -------
+    None
+    '''
+
     def __init__(self):
         self.outerId = "id" + random.randint(1, 9999999999).toString()
         self.innerId = "id" + random.randint(1, 9999999999).toString()
@@ -42,6 +122,27 @@ class GenerateContainers:
 
 
 class StatefulSegment(Base):
+    '''
+    Class is used for stateful components. Content in here is meant to be changed. 
+
+    ...
+
+    Attributes
+    ----------
+    You can pass props through the constructor, though this is optional
+
+    Methods
+    -------
+    render() -> HTML Element
+        Initial render of StatefulSegment
+
+    update() -> HTML Element
+        New content that will be placed when state changes.
+
+    setState() -> None
+        Changes states and updates DOM by first identifying container that needs to be changed and dom-diffing
+    '''
+
     def __init__(self):
         self.oi = GenerateContainers()
         self.state = {}
@@ -109,6 +210,30 @@ class StatefulSegment(Base):
         find_diffs(old, uChildren, document.getElementById(self.oi.innerId))
 
 class OLD_StatefulSegment(Base):
+    '''
+    Former class for stateful components. Content in here is meant to be changed. 
+    The difference between this and the new one is that there is no dom-diffing here. Content is simply removed and replaced.
+    For Big stateful components, this can be a burden. If the new class doesn't work for you, please use this one.
+    Also, feel free to submit an issue or pr.
+
+    ...
+
+    Attributes
+    ----------
+    You can pass props through the constructor, though this is optional
+
+    Methods
+    -------
+    render() -> HTML Element
+        Initial render of StatefulSegment
+
+    update() -> HTML Element
+        New content that will be placed when state changes.
+
+    setState() -> None
+        Changes states and updates DOM by first identifying container that needs to be changed and removing/replacing them
+    '''
+
     def __init__(self):
         self.oi = GenerateContainers()
         self.state = {}
@@ -133,6 +258,22 @@ class OLD_StatefulSegment(Base):
         document.getElementById(self.oi.outerId).appendChild(self.oi.content)
 
 class Link(Base):
+    '''
+    A link class for router. Similar to HTML <a> tag but for client-side routing
+
+    ...
+
+    Attributes
+    ----------
+    link : str
+        The path that it will navigate to
+
+    Methods
+    -------
+    render() -> HTML Element
+        Initial render of Link element
+    '''
+
     def __init__(self, link):
         self.link = link
         rebind_all(self)
@@ -143,6 +284,21 @@ class Link(Base):
         return child
 
 class Redirect(Base):
+    '''
+    A redirect class for router. 
+
+    ...
+
+    Attributes
+    ----------
+    link : str
+        The path that it will navigate to
+
+    Methods
+    -------
+    render() -> None
+        Initial render of Redirect element
+    '''
     def __init__(self, link):
         self.link = link
         rebind_all(self)
@@ -153,6 +309,38 @@ class Redirect(Base):
 #TODO: global routes?
 
 class Router(StatefulSegment):
+    '''
+    Router class. This allows client side routing.
+
+    ...
+
+    Attributes
+    ----------
+    routes : Dict
+        a dictionary of routes and their corresponding components
+
+    err_component: Base or StatefulSegment or OLD_StatefulSegment
+        if something wrong happens this component will show up. If this error is 
+        because of the source code, file an issue or pr on github.
+
+    Methods
+    -------
+    findComponentByPath(path: str) -> Base or StatefulSegment or OLD_StatefulSegment
+        Finds the corresponding component for router path
+
+    updateHash() -> None
+        Rerenders components when hash url changed.
+
+    render() -> HTML Element
+        Initial render of Link element
+
+    render() -> HTML Element
+        Initial render of Link element
+
+    update() -> HTML Element
+        Return new component for route. 
+    '''
+
     def __init__(self, routes, err_component):
         self.oi = GenerateContainers()
         # self.state = {"home": "/"}

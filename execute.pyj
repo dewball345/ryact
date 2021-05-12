@@ -4,7 +4,6 @@ rapydscript execute.pyj --output example/public/index.js --import_path ryact;exa
 to view the example
 
 or:
-rapydscript execute.pyj --output main_code/public/index.js --import_path ryact;main_code --beautify --es6
 if you are in development
 '''
 
