@@ -1,0 +1,185 @@
+# @external
+import random
+# from __python__ import bound_methods
+
+def cre(elem, attrs, children=[]):
+    element = document.createElement(elem)
+    for attr in Object.keys(attrs):
+        # print(attr, attrs[attr])
+        # element[attr] = attrs[attr]
+        if attr == "innerText" or attr == "innerHTML" or attr=="onclick" or attr=="onchange":
+            element[attr] = attrs[attr]
+        else:    
+            element.setAttribute(attr, attrs[attr])
+    # print()
+    for child in children:
+        element.appendChild(child)
+    return element
+
+def css(cssObject):
+    compiledString = ""
+    for obj in Object.keys(cssObject):
+        string = obj + ":" + cssObject[obj] + ";"
+        compiledString += string
+
+    # print(compiledString)
+    return compiledString
+
+# def run_app(component, divId="root"):
+#     print(component)
+#     document.getElementById(divId).appendChild(component)
+
+class Base:
+    def render(self):
+        pass
+
+class GenerateContainers:
+    def __init__(self):
+        self.outerId = "id" + random.randint(1, 9999999999).toString()
+        self.innerId = "id" + random.randint(1, 9999999999).toString()
+        self.container = cre("div", {"id": self.outerId})
+        self.content = cre("div", {"id": self.innerId})
+
+
+class StatefulSegment(Base):
+    def __init__(self):
+        self.oi = GenerateContainers()
+        self.state = {}
+        rebind_all(self)
+    def render(self):
+        self.oi.content.replaceChildren(self.update())
+        self.oi.container.replaceChildren(self.oi.content)
+        return self.oi.container
+    def update(self):
+        pass
+    def setState(self, attrs, one_state_change=False):
+        for attr in Object.keys(attrs):
+            self.state[attr] = attrs[attr]
+        # if(len(Object.keys(attrs)) > 0):
+        #     self.state.update(attrs)
+
+        #REMOVED COPY DETECTION, CODE DOESN'T WORK
+        # print("HERE")
+        # if(len(attrs.keys()) > 0 and not disable_copy):
+        #     print(attrs.keys())
+        #     state_copy = str(self.state)
+        #     self.state.update(attrs)
+        #     if str(self.state) == state_copy:
+        #         print("SAME", self.state, state_copy)
+        #         return;
+        #fix setState not executing bug, check cre() method
+        # print("reach") 
+        # print("HERE 53")
+        print("executed")
+        def find_diffs(o, n, op):
+            oldChildren = Array.from(o)
+            newChildren = Array.from(n)
+            # print("NEW CHILDREN")
+            # print(Array.from(newChildren))
+            # print("OLD CHILDREN")
+            # print(Array.from(oldChildren))
+            for i in range(min(len(oldChildren), len(newChildren))):
+                if(oldChildren[i] == newChildren[i]):
+                    # print(oldChildren[i].toString(), newChildren[i].toString(), oldChildren[i] == newChildren[i])
+                    print("they're the same thing!")
+                    if(len(oldChildren[i].children) == 0 and len(newChildren[i].children) == 0):
+                        if(oldChildren[i].innerHTML != newChildren[i].innerHTML):
+                            oldChildren[i].innerHTML = newChildren[i].innerHTML
+                    else:
+                        find_diffs(oldChildren[i].children, newChildren[i].children, oldChildren[i])
+                elif(oldChildren[i] != newChildren[i]):
+                    # print((oldChildren[i]).toString(), "not_equal_to", (newChildren[i]).toString())
+                    oldChildren[i].parentNode.replaceChild(newChildren[i], oldChildren[i])
+            # print("Line 75")
+            
+            if len(newChildren) > len(oldChildren):
+                
+                for i in newChildren[len(oldChildren):]:
+                    # print("APPEND")
+                    # print((i).toString())
+                    op.appendChild(i)
+            elif len(oldChildren) > len(newChildren):
+                for i in oldChildren[len(newChildren):]:
+                    # print("REVOKE")
+                    # print((i).toString())
+                    i.remove()
+        old = document.getElementById(self.oi.innerId).children
+        update = self.update(one_state_change)
+        uChildren = [update]
+        find_diffs(old, uChildren, document.getElementById(self.oi.innerId))
+
+class OLD_StatefulSegment(Base):
+    def __init__(self):
+        self.oi = GenerateContainers()
+        self.state = {}
+        rebind_all(self)
+    def render(self):
+        # document.getElementById(self.oi.outerId).remove()
+        # document.getElementById(self.oi.innerId).remove()
+
+        # print("RENDERED")
+        self.oi.content.replaceChildren(self.update())
+        self.oi.container.replaceChildren(self.oi.content)
+        return self.oi.container
+    def update(self):
+        pass
+    def setState(self, attrs, one_state_change=False):
+        # print("SETSTATE")
+        for attr in Object.keys(attrs):
+            self.state[attr] = attrs[attr]
+        document.getElementById(self.oi.innerId).remove()
+        self.oi.content = cre("div", {"id": self.oi.innerId})
+        self.oi.content.appendChild(self.update(one_state_change))
+        document.getElementById(self.oi.outerId).appendChild(self.oi.content)
+
+class Link(Base):
+    def __init__(self, link):
+        self.link = link
+        rebind_all(self)
+    def render(self, child):
+        def link(e):
+            window.location.hash = "#" + self.link
+        child.onclick = link
+        return child
+
+class Redirect(Base):
+    def __init__(self, link):
+        self.link = link
+        rebind_all(self)
+    def render(self):
+        window.location.hash = self.link
+
+#TODO: add prefix to router to prevent redundancy
+#TODO: global routes?
+
+class Router(StatefulSegment):
+    def __init__(self, routes, err_component):
+        self.oi = GenerateContainers()
+        # self.state = {"home": "/"}
+        self.routes = routes
+        self.err_component = err_component
+        rebind_all(self)
+        
+    def findComponentByPath(self, path):
+        if path in self.routes:
+            return self.routes[path]
+        else:
+            return None
+    def updateHash(self, window, e):
+        self.setState({})
+    def render(self, updater):
+        self.oi.content.replaceChildren(self.update())
+        self.oi.container.replaceChildren(self.oi.content)
+        window.onload = updater
+        window.onhashchange = updater
+        return self.oi.container
+    def update(self, one_state_change=False):
+        path = window.location.hash[1:]
+        if path == "":
+            window.location.hash = "#/"
+            path = "/"
+        component = self.findComponentByPath(path)
+        if component == None:
+            component = self.err_component
+        comp = component()
+        return comp

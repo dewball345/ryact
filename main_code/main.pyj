@@ -1,0 +1,20 @@
+from ryact.baseclasses import cre, css, Base
+
+
+class MyApp(Base):
+    def render(self):
+        return cre(
+            "h1", {
+                "style":
+                css({
+                    "margin": "20px",
+                    "color": "blue",
+                    "font-family": "sans-serif"
+                }),
+                "innerText":
+                "Hello ryact! Rapydscript is great, but ryact makes it better!"
+            })
+
+
+def run_app():
+    document.getElementById("root").appendChild(MyApp().render())

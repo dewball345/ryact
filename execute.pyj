@@ -1,0 +1,15 @@
+'''
+run:
+rapydscript execute.pyj --output example/public/index.js --import_path ryact;example --beautify --es6
+to view the example
+
+or:
+rapydscript execute.pyj --output main_code/public/index.js --import_path ryact;main_code --beautify --es6
+if you are in development
+'''
+
+#change from example.main to main_code.main
+from main_code.main import run_app
+
+run_app()
+

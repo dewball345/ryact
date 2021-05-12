@@ -1,0 +1,59 @@
+from ryact.baseclasses import cre, Base, GenerateContainers, StatefulSegment, css
+
+
+class List(StatefulSegment):
+    def __init__(self):
+        self.oi = GenerateContainers()
+        self.state = {"items": []}
+
+    def update(self):
+        return cre("ul", {},
+                   [cre("li", {"innerText": i}) for i in self.state["items"]])
+
+
+class TxtManager(StatefulSegment):
+    def __init__(self):
+        self.oi = GenerateContainers()
+        self.state = {"todotext": ""}
+
+    def update(self):
+        return cre("div", {})
+
+
+class Todo(Base):
+    def render(self):
+        txt = TxtManager()
+
+        def change(e):
+            txt.setState({"todotext": e.target.value})
+
+        def updateState():
+            lst.state["items"].append(txt.state["todotext"])
+            lst.setState({"items": lst.state["items"]})
+
+        lst = List()
+        btn = cre(
+            "button", {
+                "innerText": "Click to add",
+                "class": "btn btn-primary col-sm m-2",
+                "onclick": updateState
+            })
+        return cre(
+            "div", {
+                "class":
+                "container-sm d-flex flex-column justify-content-center align-items-center",
+                "style": css({"min-height": "100vh"}),
+            }, [
+                cre("h1", {"innerText": "todo list"}),
+                txt.render(),
+                lst.render(),
+                cre("div", {"class": "row"}, [
+                    cre(
+                        "input", {
+                            "type": "text",
+                            "onchange": change,
+                            "class": "col-sm form-control m-2"
+                        }),
+                    btn,
+                ])
+            ])

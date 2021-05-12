@@ -1,0 +1,85 @@
+import stdlib
+from ryact.baseclasses import cre, Base, GenerateContainers, StatefulSegment, OLD_StatefulSegment, Router, Link, css
+from todo import Todo
+from counter import Counter
+# hello()
+
+
+def homePage():
+    thing = cre(
+        "div",
+        {
+            "hello": "ya",
+            # "innerText":"help please work",
+            # "class":"idadsf"
+            "class":
+            "container-sm d-flex flex-column justify-content-center align-items-center",
+            "style": css({"min-height": "100vh"}),
+            # "id":"thing",
+            # "attr":"what",
+            # "classds": "container-sm d-flex flex-column justify-content-center align-items-center",
+        },
+        [
+            cre(
+                "h1", {
+                    "innerText":
+                    "Ryact: A super-fast python library for single page webapps",
+                    "class": "text-center"
+                }),
+            cre(
+                "code", {
+                    "innerText": '''
+            #Ryact can be thought of as a continuation of Breact. The main difference is that Ryact is more than 10x faster
+            #than its sister framework, but with most of the features still avaiable.
+        ''',
+                    "class": "text-center m-2"
+                }),
+            cre("h2", {
+                "innerText": "Sample Apps",
+                "class": "text-center m-2"
+            }),
+            Link('/counter').render(
+                cre("button", {
+                    "class": "btn btn-primary m-2",
+                    "innerText": "counter"
+                })),
+            Link('/stls').render(
+                cre(
+                    "button", {
+                        "class": "btn btn-primary m-2",
+                        "innerText": "stateless widget example"
+                    })),
+            Link('/todo').render(
+                cre("button", {
+                    "class": "btn btn-primary m-2",
+                    "innerText": "todo list"
+                }))
+        ])
+    # thing["innerText"] = "containerd-sm"
+    return thing
+
+
+class Thing(Base):
+    def render(self):
+        return cre("h1", {"innerText": "hi"})
+
+
+def err_component():
+    return cre("h1", {"innerText": "oops error"})
+
+
+router = Router(
+    {
+        '/': homePage,
+        '/counter': Counter().render,
+        '/stls': Thing().render,
+        '/todo': Todo().render
+    }, err_component)
+
+
+def routerUpdate():
+    router.updateHash()
+
+
+def run_app():
+    document.getElementById("root").appendChild(router.render(routerUpdate))
