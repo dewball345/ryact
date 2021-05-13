@@ -1,4 +1,4 @@
-Ryact: a react-like framework to build super-fast web apps in python.
+# Ryact: a react-like framework to build super-fast web apps in python.
 
 ![Lighthouse Metric](https://user-images.githubusercontent.com/30184788/118049818-288d8780-b333-11eb-9566-da231efcfd16.png)
 
