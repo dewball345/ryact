@@ -77,4 +77,20 @@ Caveats - When to use this vs Breact
 
 Choose Wisely.
 
-More documentation will be added later. 
+Contribute
+----------
+
+- Issue Tracker: github.com/dewball345/ryact/issues
+- Source Code: github.com/dewball345/ryact
+
+Make sure that you follow the [Code of Conduct](CODE_OF_CONDUCT.md)
+
+Support
+-------
+
+Please write issues in the issue tracker
+
+License
+-------
+
+dewball345/ryact is licensed under the BSD 3-Clause "New" or "Revised" License
