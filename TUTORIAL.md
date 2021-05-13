@@ -103,7 +103,7 @@ def run_app():
 
 
 ### How ryact changes state
-`
+
 Ryact's main difference in react is that there is no virtual dom; instead, stateful components are marked with a unique id, and are referenced and changed during setState(). 
 Each stateful component is wrapped with two containers- an outer one(for identifying the stateful component), and an inner one(for identifying the content within the component 
 to replace). Once Ryact identifies the containers that are needed to change state, it then uses a dom-diffing algorithm to identify which exact parts have changed. This is to prevent 
@@ -115,7 +115,7 @@ Remember, in a stateful component, the main code is written in an update() funct
 You do not want to put forms and stuff here, as they will be reloaded, and so will the content in them(though the data entered should be intact). 
 This will make for an irritating process, so as a workaround, define them in a Stateless component and manage their state in a stateful container, 
 that handles state but doesn't render anything. 
-`
+
 
 Here is the code that we will use to create the todolist. With this you can enter a todoitem and click a button. The item will be logged in to the list.
 
@@ -204,10 +204,10 @@ Add `from todo import Todo` at the top. This is so that we can access the `Todo`
 
 In the `run_app` function...
 
-`
+```
 def run_app():
     document.getElementById("root").appendChild(Todo().render())
-`
+```
 
 ##### And we're done!
 If all works well, you should see:
