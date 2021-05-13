@@ -72,10 +72,81 @@ Caveats - When to use this vs Breact
 | Designed for easy development  | Designed for speed; development may be harder  |
 | Full python syntax  | Mostly python syntax, but some things, like: casting, lambdas, etc. may not work. Check the rapydscript documentation for more info  |
 | Super slow speed  | Blazing fast code |
-| Code is not precompiled in advance | Code is precompiled in advance, which makes things faster |
+| Code is not precompiled in advance, and supports live reload | Code is precompiled in advance, which makes things faster; you have to run the compile function before seeing changes|
 | You can use custom python modules | you cannot use many custom python modules |
 
 Choose Wisely.
+
+Homepage - Ryact vs Breact
+---
+
+Ryact:
+```
+def homePage():
+    thing = cre(
+        "div",
+        {
+            "class":
+            "container-sm d-flex flex-column justify-content-center align-items-center",
+            "style": css({"min-height": "100vh"}),
+        },
+        [
+            cre(
+                "h1", {
+                    "innerText":
+                    "Ryact: A super-fast python library for single page webapps",
+                    "class": "text-center"
+                }),
+            cre(
+                "code", {
+                    "innerText": '''
+            #Ryact can be thought of as a continuation of Breact. The main difference is that Ryact is more than 10x faster
+            #than its sister framework, but with most of the features still avaiable.
+        ''',
+                    "class": "text-center m-2"
+                }),
+            cre("h2", {
+                "innerText": "Sample Apps",
+                "class": "text-center m-2"
+            }),
+            Link('/counter').render(
+                cre("button", {
+                    "class": "btn btn-primary m-2",
+                    "innerText": "counter"
+                })),
+            Link('/stls').render(
+                cre(
+                    "button", {
+                        "class": "btn btn-primary m-2",
+                        "innerText": "stateless widget example"
+                    })),
+            Link('/todo').render(
+                cre("button", {
+                    "class": "btn btn-primary m-2",
+                    "innerText": "todo list"
+                }))
+        ])
+```
+
+Breact
+```
+def homePage():
+    return group(DIV(Class="container d-flex flex-column justify-content-center align-items-center", style={
+        "height":"100vh"
+    }), [
+        H1("Breact: A python library for single page webapps", Class="text-center"),
+        P('''
+            This app was coded in python in Breact. Look in the inspector, and you will see
+            <br>
+            <code>&lt;script src="text/python" &gt; </code>
+        ''', Class="text-center"),
+        H3("Sample Apps:"),
+        Link("/todo").render(BUTTON("Simple Todolist", Class="btn btn-primary m-2")),
+        Link('/quiz').render(BUTTON("Small Quiz", Class="btn btn-primary m-2")),
+        Link('/playground').render(BUTTON("A Little Playground", Class="btn btn-primary m-2")),
+        Link('/router-playground').render(BUTTON("Router Playground", Class="btn btn-warning m-2"))
+    ])
+```
 
 Contribute
 ----------
