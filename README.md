@@ -93,4 +93,4 @@ Please write issues in the issue tracker
 License
 -------
 
-dewball345/ryact is licensed under the BSD 3-Clause "New" or "Revised" License
+dewball345/ryact is licensed under the BSD 2-Clause "Simplified" License
