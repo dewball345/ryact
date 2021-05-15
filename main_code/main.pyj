@@ -1,6 +1,5 @@
 from ryact.baseclasses import cre, css, Base
 
-
 class MyApp(Base):
     def render(self):
         return cre(

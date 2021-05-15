@@ -1,5 +1,6 @@
 (function(){
 "use strict";
+var ՐՏ_2, ՐՏ_3, ՐՏ_4, ՐՏ_5, ՐՏ_6, ՐՏ_13, ՐՏ_14, ՐՏ_15, ՐՏ_16;
 function ՐՏ_bind(fn, thisArg) {
     var ret;
     if (fn.orig) {
@@ -397,7 +398,7 @@ var ՐՏ_modules = {};
 
     var random = ՐՏ_modules["random"];
     
-    function cre(elem, attrs, children=[]) {
+    var cre = (ՐՏ_2 = function cre(elem, attrs, children=[]) {
         var ՐՏitr7, ՐՏidx7, ՐՏitr8, ՐՏidx8;
         var element, attr, child;
         element = document.createElement(elem);
@@ -416,8 +417,10 @@ var ՐՏ_modules = {};
             element.appendChild(child);
         }
         return element;
-    }
-    function css(cssObject) {
+    }, Object.defineProperty(ՐՏ_2, "__doc__", {
+        value: "Function to create dom trees in ryact.undefined\n\n...\n\nParameters\n----------\nelem : HTML element\n    This is the element that will have the children in it\n\nattrs: Dict\n    This is a dictionary of attributes\n\nchildren: List[HTML element]\n    This is the children that will be added\n\nReturns\n-------\nHTML Element\n    Combined element with parent and children"
+    }), ՐՏ_2);
+    var css = (ՐՏ_3 = function css(cssObject) {
         var ՐՏitr9, ՐՏidx9;
         var compiledString, obj, string;
         compiledString = "";
@@ -428,13 +431,23 @@ var ՐՏ_modules = {};
             compiledString += string;
         }
         return compiledString;
-    }
-    class Base {
+    }, Object.defineProperty(ՐՏ_3, "__doc__", {
+        value: "Converts a css dictionary into a style string. This is mostly syntatic sugar.\n\n...\n\nParameters\n----------\ncssObject : Dict\n    This is the element that will have the children in it\n\nReturns\n-------\nString\n    Css string"
+    }), ՐՏ_3);
+    var Base = (ՐՏ_4 = class Base {
         render () {
             var self = this;
         }
-    }
-    class GenerateContainers {
+    }, (function(){
+        Object.defineProperties(ՐՏ_4.prototype, {
+            __doc__: {
+                enumerable: true, 
+                writable: true, 
+                value: "The Base(as mentioned in the class name) class, the one which all stateless and stateful components come from\n\n...\n\nAttributes\n----------\nYou can pass props through the constructor. This is optional; no props need to be passed for this to work\n\nMethods\n-------\nrender() -> an HTML element\n    Initial rendering of content"
+            }
+        });
+    })(), ՐՏ_4);
+    var GenerateContainers = (ՐՏ_5 = class GenerateContainers {
         constructor () {
             var self = this;
             self.outerId = "id" + random.randint(1, 9999999999).toString();
@@ -446,8 +459,16 @@ var ՐՏ_modules = {};
                 "id": self.innerId
             });
         }
-    }
-    class StatefulSegment extends Base {
+    }, (function(){
+        Object.defineProperties(ՐՏ_5.prototype, {
+            __doc__: {
+                enumerable: true, 
+                writable: true, 
+                value: "Class is used to generate containers that are identified and dom-diffed during setState()\n\n...\n\nAttributes\n----------\nself.outerId : str\n    The id of the first identifier in setState.undefined\n\nself.innerId : str\n    The id of the second identifier in setState.undefined\n\nself.container: html.DIV\n    This is the first identifier in setState. Breact uses a simpleundefined\n    getElementById to access this container. The content container\n    resides in here\n\nself.content: html.DIV\n    This is the second identifier in setState, and holds the mainundefined\n    content. This container is dom-diffed in the StatefulSegment\n    class or deleted and reupdated in the OLD_StatefulSegment class\n\nMethods\n-------\nNone"
+            }
+        });
+    })(), ՐՏ_5);
+    var StatefulSegment = (ՐՏ_6 = class StatefulSegment extends Base {
         constructor () {
             super();
             var self = this;
@@ -475,21 +496,21 @@ var ՐՏ_modules = {};
             }
             ՐՏ_print("executed");
             function find_diffs(o, n, op) {
-                var ՐՏ_2, ՐՏ_3, ՐՏ_4, ՐՏ_5, ՐՏ_6, ՐՏ_7, ՐՏitr11, ՐՏidx11, ՐՏitr12, ՐՏidx12;
+                var ՐՏ_7, ՐՏ_8, ՐՏ_9, ՐՏ_10, ՐՏ_11, ՐՏ_12, ՐՏitr11, ՐՏidx11, ՐՏitr12, ՐՏidx12;
                 var oldChildren, newChildren, i;
                 oldChildren = Array.from(o);
                 newChildren = Array.from(n);
                 for (i = 0; i < min(len(oldChildren), len(newChildren)); i++) {
-                    if (((ՐՏ_2 = oldChildren[i]) === (ՐՏ_3 = newChildren[i]) || typeof ՐՏ_2 === "object" && ՐՏ_eq(ՐՏ_2, ՐՏ_3))) {
+                    if (((ՐՏ_7 = oldChildren[i]) === (ՐՏ_8 = newChildren[i]) || typeof ՐՏ_7 === "object" && ՐՏ_eq(ՐՏ_7, ՐՏ_8))) {
                         ՐՏ_print("they're the same thing!");
                         if (len(oldChildren[i].children) === 0 && len(newChildren[i].children) === 0) {
-                            if (((ՐՏ_4 = oldChildren[i].innerHTML) !== (ՐՏ_5 = newChildren[i].innerHTML) && (typeof ՐՏ_4 !== "object" || !ՐՏ_eq(ՐՏ_4, ՐՏ_5)))) {
+                            if (((ՐՏ_9 = oldChildren[i].innerHTML) !== (ՐՏ_10 = newChildren[i].innerHTML) && (typeof ՐՏ_9 !== "object" || !ՐՏ_eq(ՐՏ_9, ՐՏ_10)))) {
                                 oldChildren[i].innerHTML = newChildren[i].innerHTML;
                             }
                         } else {
                             find_diffs(oldChildren[i].children, newChildren[i].children, oldChildren[i]);
                         }
-                    } else if (((ՐՏ_6 = oldChildren[i]) !== (ՐՏ_7 = newChildren[i]) && (typeof ՐՏ_6 !== "object" || !ՐՏ_eq(ՐՏ_6, ՐՏ_7)))) {
+                    } else if (((ՐՏ_11 = oldChildren[i]) !== (ՐՏ_12 = newChildren[i]) && (typeof ՐՏ_11 !== "object" || !ՐՏ_eq(ՐՏ_11, ՐՏ_12)))) {
                         oldChildren[i].parentNode.replaceChild(newChildren[i], oldChildren[i]);
                     }
                 }
@@ -512,8 +533,16 @@ var ՐՏ_modules = {};
             uChildren = [ update ];
             find_diffs(old, uChildren, document.getElementById(self.oi.innerId));
         }
-    }
-    class OLD_StatefulSegment extends Base {
+    }, (function(){
+        Object.defineProperties(ՐՏ_6.prototype, {
+            __doc__: {
+                enumerable: true, 
+                writable: true, 
+                value: "Class is used for stateful components. Content in here is meant to be changed.undefined\n\n...\n\nAttributes\n----------\nYou can pass props through the constructor, though this is optional\n\nMethods\n-------\nrender() -> HTML Element\n    Initial render of StatefulSegment\n\nupdate() -> HTML Element\n    New content that will be placed when state changes.\n\nsetState() -> None\n    Changes states and updates DOM by first identifying container that needs to be changed and dom-diffing"
+            }
+        });
+    })(), ՐՏ_6);
+    var OLD_StatefulSegment = (ՐՏ_13 = class OLD_StatefulSegment extends Base {
         constructor () {
             super();
             var self = this;
@@ -546,8 +575,16 @@ var ՐՏ_modules = {};
             self.oi.content.appendChild(self.update(one_state_change));
             document.getElementById(self.oi.outerId).appendChild(self.oi.content);
         }
-    }
-    class Link extends Base {
+    }, (function(){
+        Object.defineProperties(ՐՏ_13.prototype, {
+            __doc__: {
+                enumerable: true, 
+                writable: true, 
+                value: "Former class for stateful components. Content in here is meant to be changed.undefined\nThe difference between this and the new one is that there is no dom-diffing here. Content is simply removed and replaced.\nFor Big stateful components, this can be a burden. If the new class doesn't work for you, please use this one.\nAlso, feel free to submit an issue or pr.\n\n...\n\nAttributes\n----------\nYou can pass props through the constructor, though this is optional\n\nMethods\n-------\nrender() -> HTML Element\n    Initial render of StatefulSegment\n\nupdate() -> HTML Element\n    New content that will be placed when state changes.\n\nsetState() -> None\n    Changes states and updates DOM by first identifying container that needs to be changed and removing/replacing them"
+            }
+        });
+    })(), ՐՏ_13);
+    var Link = (ՐՏ_14 = class Link extends Base {
         constructor (link) {
             super();
             var self = this;
@@ -562,8 +599,16 @@ var ՐՏ_modules = {};
             child.onclick = link;
             return child;
         }
-    }
-    class Redirect extends Base {
+    }, (function(){
+        Object.defineProperties(ՐՏ_14.prototype, {
+            __doc__: {
+                enumerable: true, 
+                writable: true, 
+                value: "A link class for router. Similar to HTML <a> tag but for client-side routing\n\n...\n\nAttributes\n----------\nlink : str\n    The path that it will navigate to\n\nMethods\n-------\nrender() -> HTML Element\n    Initial render of Link element"
+            }
+        });
+    })(), ՐՏ_14);
+    var Redirect = (ՐՏ_15 = class Redirect extends Base {
         constructor (link) {
             super();
             var self = this;
@@ -574,8 +619,16 @@ var ՐՏ_modules = {};
             var self = this;
             window.location.hash = self.link;
         }
-    }
-    class Router extends StatefulSegment {
+    }, (function(){
+        Object.defineProperties(ՐՏ_15.prototype, {
+            __doc__: {
+                enumerable: true, 
+                writable: true, 
+                value: "A redirect class for router.undefined\n\n...\n\nAttributes\n----------\nlink : str\n    The path that it will navigate to\n\nMethods\n-------\nrender() -> None\n    Initial render of Redirect element"
+            }
+        });
+    })(), ՐՏ_15);
+    var Router = (ՐՏ_16 = class Router extends StatefulSegment {
         constructor (routes, err_component) {
             super();
             var self = this;
@@ -605,7 +658,7 @@ var ՐՏ_modules = {};
             return self.oi.container;
         }
         update (one_state_change=false) {
-            var ՐՏ_8;
+            var ՐՏ_17;
             var self = this;
             var path, component, comp;
             path = window.location.hash.slice(1);
@@ -614,13 +667,21 @@ var ՐՏ_modules = {};
                 path = "/";
             }
             component = self.findComponentByPath(path);
-            if ((component === (ՐՏ_8 = null) || typeof component === "object" && ՐՏ_eq(component, ՐՏ_8))) {
+            if ((component === (ՐՏ_17 = null) || typeof component === "object" && ՐՏ_eq(component, ՐՏ_17))) {
                 component = self.err_component;
             }
             comp = component();
             return comp;
         }
-    }
+    }, (function(){
+        Object.defineProperties(ՐՏ_16.prototype, {
+            __doc__: {
+                enumerable: true, 
+                writable: true, 
+                value: "Router class. This allows client side routing.\n\n...\n\nAttributes\n----------\nroutes : Dict\n    a dictionary of routes and their corresponding components\n\nerr_component: Base or StatefulSegment or OLD_StatefulSegment\n    if something wrong happens this component will show up. If this error isundefined\n    because of the source code, file an issue or pr on github.\n\nMethods\n-------\nfindComponentByPath(path: str) -> Base or StatefulSegment or OLD_StatefulSegment\n    Finds the corresponding component for router path\n\nupdateHash() -> None\n    Rerenders components when hash url changed.\n\nrender() -> HTML Element\n    Initial render of Link element\n\nrender() -> HTML Element\n    Initial render of Link element\n\nupdate() -> HTML Element\n    Return new component for route.undefined"
+            }
+        });
+    })(), ՐՏ_16);
     ՐՏ_modules["ryact.baseclasses"]["cre"] = cre;
     ՐՏ_modules["ryact.baseclasses"]["css"] = css;
     ՐՏ_modules["ryact.baseclasses"]["Base"] = Base;

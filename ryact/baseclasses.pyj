@@ -63,6 +63,30 @@ def css(cssObject):
     # print(compiledString)
     return compiledString
 
+def asyncSequence(funcList):
+    '''
+    Runs a sequence of asynchronous functions and then everything after. 
+    Closest thing to async/await in rapydscript
+
+    ...
+
+    Parameters
+    ----------
+    funcList : List[Function]
+        This is the element that will have the list of functions
+
+    Returns
+    -------
+    None
+    '''
+    def asyncdef(asyncoper, after):
+        return asyncoper.then(after)
+
+    state = funcList[0]()
+    for func in funcList[1:]:
+        state = asyncdef(state, func)
+    # print(state)
+    # return state
 # def run_app(component, divId="root"):
 #     print(component)
 #     document.getElementById(divId).appendChild(component)
