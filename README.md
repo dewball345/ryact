@@ -148,6 +148,32 @@ def homePage():
     ])
 ```
 
+Api Calls in Ryact
+-----
+Api Calls are supported. You can use the fetch api, which is supported in rapydscript. 
+
+Here are two ways to do this:
+
+1. Using the .then() function in javascript
+```
+def apiCallThen():
+    result = fetch('https://jsonplaceholder.typicode.com/todos/1').then(
+        def(result):
+            result.json().then(
+                def(mjson):
+                    print(mjson)
+            )
+    )
+```
+2. Using the asyncSequence() function from ryact
+```
+def apiCallSequence():
+    def a(): return fetch('https://jsonplaceholder.typicode.com/todos/1')
+    def b(result): return result.json()
+    def c(json): print(json)
+    asyncSequence([a, b, c])
+```
+
 Contribute
 ----------
 
