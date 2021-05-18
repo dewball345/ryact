@@ -43,7 +43,7 @@ Features
 
 Usage
 -----
-A tutorial will be made soon
+View [this](TUTORIAL.md) tutorial to learn how to make a todo list using ryact!
 
 Directory Structure
 -------------------
