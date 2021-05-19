@@ -4,7 +4,7 @@
 
 This project was started by dewball345.
 
-Ryact is similar to react, with components and state. The main difference, however, is that Breact doesn't have a virtual dom; instead, each stateful element (element that uses setState) is assigned a unique id and is retrieved and changed(by dom-diffing) when necessary. There isn't much that I have added - just the bare minimum, for now. The source code is around 300 lines of code, including the pre-built hash router. You can find the tutorial at: https://dev.to/pixari/build-a-very-basic-spa-javascript-router-2k4p
+Ryact is similar to react, with components and state. The main difference, however, is that Ryact doesn't have a virtual dom; instead, each stateful element (element that uses setState) is assigned a unique id and is retrieved and changed(by dom-diffing) when necessary. There isn't much that I have added - just the bare minimum, for now. The source code is around 300 lines of code, including the pre-built hash router. You can find the tutorial at: https://dev.to/pixari/build-a-very-basic-spa-javascript-router-2k4p
 
 Ryact is powered by [rapydscript](https://github.com/atsepkov/RapydScript).
 
